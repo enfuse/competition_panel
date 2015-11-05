@@ -12,59 +12,71 @@
 var _ = require('lodash');
 var datastore = require('nedb');
 var db = {
-  participantes: new datastore({ filename: 'server/db/participantes.db', autoload: true })
+  participantes: new datastore({
+    filename: 'server/db/participantes.db',
+    autoload: true
+  })
 };
 
+/*
+ var WebSocket = require('ws');
+ var ws = new WebSocket('ws://localhost/socket');
+
+ ws.on('open', function open() {
+ ws.send('something');
+ });*/
+
 // Get list of participantes
-exports.index = function(req, res) {
+exports.index = function (req, res) {
   db.participantes.find({}, function (err, docs) {
     if (err) {
-      res.json([{'error':'An error has occurred'}]);
-    } else {
+      res.json([{'error': 'An error has occurred'}]);
+    }
+    else {
       res.json(docs);
     }
   });
 };
 
-exports.create = function(req, res){
-  var doc = { hello: 'world',
-    n: 5,
-    today: new Date(),
-    nedbIsAwesome: true,
-    notthere: null,
-    notToBeSaved: undefined,
-    fruits: [ 'apple', 'orange', 'pear' ],
-    infos: { name: 'nedb' }
-  };
-  db.participantes.insert(doc, function (err, newDoc) {   // Callback is optional
+exports.create = function (req, res) {
+  db.participantes.insert(req.body, function (err, newDoc) {   // Callback is optional
     if (err) {
-      res.json([{'error':'An error has occurred'}]);
-    } else {
+      res.json([{'error': 'An error has occurred', 'errorObj': err}]);
+    }
+    else {
       res.json(newDoc);
     }
   });
 }
 
-exports.show = function(req, res) {
- /*var datos = [];
-  var listaUsuarios = req.params.id
-  var users_id = listaUsuarios.split(',');
-  var i = 0, len = users_id.length;*/
-
-  /*var Datastore = require('nedb')
-    , db = new Datastore({ filename: 'path/to/datafile' });*/
-  db.loadDatabase(function (err) {    // Callback is optional
-    // Now commands will be executed
-    //doSomethingOnceAllAreDone();
-    console.log("carga");
+exports.update = function (req, res) {
+  db.participantes.update({_id: req.params.id}, {$set: {mostrar: req.body.mostrar}}, function (err, numReplaced) {   // Callback is optional
+    if (err) {
+      res.json([{'error': 'An error has occurred'}]);
+    }
+    else {
+      res.json([{'ok': numReplaced}]);
+    }
   });
-  res.json([{ hello: 'world',
-    n: 5,
-    today: new Date(),
-    nedbIsAwesome: true,
-    notthere: null,
-    notToBeSaved: undefined,
-    fruits: [ 'apple', 'orange', 'pear' ],
-    infos: { name: 'nedb' }
-  }]);
+}
+exports.destroy = function (req, res) {
+  db.participantes.remove({_id: req.params.id}, {}, function (err, numRemoved) {
+    if (err) {
+      res.json([{'error': 'An error has occurred'}]);
+    }
+    else {
+      res.json([{'result': 'Ok'}]);
+    }
+  });
+}
+
+exports.show = function (req, res) {
+  db.participantes.loadDatabase(function (err) {    // Callback is optional
+    if (err) {
+      res.json([{'error': 'An error has occurred'}]);
+    }
+    else {
+      res.json([{}]);
+    }
+  });
 };

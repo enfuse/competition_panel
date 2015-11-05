@@ -1,0 +1,53 @@
+<div ng-controller="AdminCtrl" layout="row" layout-align="center center">
+    <div>
+        <div layout="column" ng-cloak class="md-inlsine-form">
+            <fieldset class="standard" flex>
+            <form name="userForm" ng-submit="processForm()">
+                <md-content md-theme="docs-dark" layout-padding layout-sm="column">
+                    <div layout layout-sm="column">
+                        <md-input-container class="md-block">
+                            <label>Nombre</label>
+                            <input name="name" required ng-model="participante.name">
+                            <div ng-messages="userForm.name.$error">
+                                <div ng-message="required">Campo obligatorio.</div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label>Apellidos</label>
+                            <input name="lastname" required ng-model="participante.lastname" >
+                            <div ng-messages="userForm.lastname.$error">
+                                <div ng-message="required">Campo obligatorio.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div layout layout-sm="column">
+                        <md-input-container>
+                            <label>Foto</label>
+                            <input name="photo" ng-model="participante.photo" type="file">
+                            <div ng-messages="userForm.photo.$error">
+                                <div ng-message="required">Campo obligatorio.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div layout layout-sm="column">
+                        <md-button class="md-primary md-raised md-hue-2">Añadir</md-button>
+                    </div>
+                </md-content>
+            </form>
+</fieldset>
+        </div>
+        <div layout="column"class="md-inline-form">
+            <md-list>
+                <md-subheader class="md-no-sticky">Participantes</md-subheader>
+                <md-list-item ng-repeat="participante in participantes">
+                    <md-checkbox ng-model="participante.mostrar" ng-change="mostrarParticipante(participante._id, participante.mostrar)"></md-checkbox>
+                    <p> {{ participante.name }} {{ participante.lastname }} </p>
+                    <ng-md-icon class="md-secondary" ng-click="removeParticipante(participante._id)" aria-label="Remove" ng-mouseenter='fill="red"' ng-mouseleave='fill="#FFC4AA"'  size=24 icon="clear" style="fill: {{fill}}"  ng-init='fill="#FFC4AA"'></ng-md-icon>
+                    <!--md-checkbox class="md-secondary" ng-model="participante.wanted"></md-checkbox-->
+                </md-list-item>
+            </md-list>
+        </div>
+    </div>
+
+</div>

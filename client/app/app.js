@@ -5,7 +5,10 @@ angular.module('counterApp', [
   'ngResource',
   'ngSanitize',
   'ui.router',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ngMessages',
+  'ngMaterial',
+  'ngMdIcons'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider
