@@ -1,1 +1,19 @@
-Go view
+<div ng-controller="GoCtrl" flex >
+    <md-grid-list
+            md-cols-sm="2" md-cols-md="2" md-cols-gt-md="6"
+            md-row-height-gt-md="1:1" md-row-height="4:3"
+            md-gutter="8px" md-gutter-gt-sm="4px" >
+        <md-grid-tile ng-repeat="participante in activeParticipantes as key"
+                      md-rowspan="{{2}}"
+                      md-colspan="{{2}}"
+                      md-colspan-sm="1"
+                      ng-class="tile.background" style="background: linear-gradient(
+      rgba(255,255,255, 0.7),
+      rgba(255,255,255, 0.7)
+    ), url(http://lorempixel.com/800/800/people/?{{participante._id}}); background-size: cover">
+            <p style="font-size:190px; color:red;">{{participante.points}}</p>
+            <img src="">
+            <md-grid-tile-footer><h3>{{participante.name}} {{participante.lastname}} </h3></md-grid-tile-footer>
+        </md-grid-tile>
+    </md-grid-list>
+</div>
