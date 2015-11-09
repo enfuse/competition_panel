@@ -5,6 +5,12 @@ angular.module('counterApp')
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
+    },{
+      'title': 'Panel',
+      'link': '/go'
+    },{
+      'title': 'Admin',
+      'link': '/admin'
     }];
 
     $scope.isCollapsed = true;
