@@ -18,17 +18,21 @@ var db = {
   })
 };
 
-/*
- var WebSocket = require('ws');
- var ws = new WebSocket('ws://localhost/socket');
-
- ws.on('open', function open() {
- ws.send('something');
- });*/
-
 // Get list of participantes
 exports.index = function (req, res) {
   db.participantes.find({}, function (err, docs) {
+    if (err) {
+      res.json([{'error': 'An error has occurred'}]);
+    }
+    else {
+      res.json(docs);
+    }
+  });
+};
+
+// Get list of participantes
+exports.active = function (req, res) {
+  db.participantes.find({mostrar:true}, function (err, docs) {
     if (err) {
       res.json([{'error': 'An error has occurred'}]);
     }
