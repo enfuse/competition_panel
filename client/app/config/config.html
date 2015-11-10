@@ -1,0 +1,42 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-3">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Configuración general</div>
+                <div class="panel-body">
+                    <form name="configForm" ng-submit="processForm()">
+                        <md-input-container class="md-block">
+                            <input name="name" type="hidden" required ng-model="config._id">
+                        </md-input-container>
+
+                        <md-input-container class="md-block">
+                            <label>Tiempo del cronómetro</label>
+                            <input name="timer" required ng-model="config.timer">
+
+                            <div ng-messages="configForm.timer.$error">
+                                <div ng-message="required">En segundos (10min => 600, 5min => 300)</div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label>Puntos por pulsación</label>
+                            <input name="steps" required ng-model="config.steps">
+
+                            <div ng-messages="configForm.steps.$error">
+                                <div ng-message="required">Campo obligatorio.</div>
+                            </div>
+                        </md-input-container>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

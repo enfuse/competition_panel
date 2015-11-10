@@ -8,7 +8,8 @@ angular.module('counterApp', [
   'ui.bootstrap',
   'ngMessages',
   'ngMaterial',
-  'ngMdIcons'
+  'ngMdIcons',
+  'angularFileUpload'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider

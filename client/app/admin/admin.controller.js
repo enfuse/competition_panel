@@ -2,8 +2,11 @@
 
 
 angular.module('counterApp')
-  .controller('AdminCtrl', function ($scope, $http) {
+  .controller('AdminCtrl', function ($scope, $http, FileUploader) {
     $scope.participantes = [];
+    var uploader = $scope.uploader = new FileUploader({
+      url: 'upload.php'
+    });
 
     $scope.processForm = function() {
       $http.post('/api/participantes', $scope.participante);
@@ -36,6 +39,7 @@ angular.module('counterApp')
         $scope.participantes= participantes;
       });
     }
+    //Inicializo el scope para participantes
     initParticipante();
   })
 
