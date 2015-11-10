@@ -14,13 +14,15 @@ var datastore = require('nedb');
 var db = {
   participantes: new datastore({
     filename: 'server/db/participantes.db',
-    autoload: true
+    autoload: true,
+    timestampData: true
   })
 };
+db.participantes.persistence.setAutocompactionInterval(5000);
 
 // Get list of participantes
 exports.index = function (req, res) {
-  db.participantes.find({}, function (err, docs) {
+  db.participantes.find({name  : {$exists:true} }, function (err, docs) {
     if (err) {
       res.json([{'error': 'An error has occurred'}]);
     }
@@ -44,6 +46,7 @@ exports.active = function (req, res) {
 
 exports.create = function (req, res) {
   db.participantes.insert(req.body, function (err, newDoc) {   // Callback is optional
+    console.log(req.body);
     if (err) {
       res.json([{'error': 'An error has occurred', 'errorObj': err}]);
     }
@@ -63,6 +66,7 @@ exports.update = function (req, res) {
     }
   });
 }
+
 exports.destroy = function (req, res) {
   db.participantes.remove({_id: req.params.id}, {}, function (err, numRemoved) {
     if (err) {
