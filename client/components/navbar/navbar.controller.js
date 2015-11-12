@@ -6,11 +6,15 @@ angular.module('counterApp')
       'title': 'Home',
       'link': '/'
     },{
-      'title': 'Panel',
-      'link': '/go'
-    },{
-      'title': 'Admin',
+      'title': 'Participantes',
       'link': '/admin'
+    },{
+      'title': 'Configuración',
+      'link': '/config'
+    },{
+      'title': 'Panel',
+      'link': '/go',
+      'target': '_blank'
     }];
 
     $scope.isCollapsed = true;

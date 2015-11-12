@@ -32,15 +32,27 @@ exports.create = function (req, res) {
       res.json([{'error': 'An error has occurred'}]);
     }
     else {
-      db.config.update({_id: req.body._id},
-        {$set: {timer: req.body.timer, steps: req.body.steps}}, function (err, numReplaced) {   // Callback is optional
-        if (err) {
-          res.json([{'error': 'An error has occurred'}]);
-        }
-        else {
-          res.json([{'ok': numReplaced}]);
-        }
-      });
+      if(docs == null){
+        db.config.insert(req.body, function (err, newDoc) {   // Callback is optional
+          if (err) {
+            res.json([{'error': 'An error has occurred', 'errorObj': err}]);
+          }
+          else {
+            res.json(newDoc);
+          }
+        });
+      }else{
+        db.config.update({_id: req.body._id},
+          {$set: {timer: req.body.timer, steps: req.body.steps}}, function (err, numReplaced) {   // Callback is optional
+            if (err) {
+              res.json([{'error': 'An error has occurred'}]);
+            }
+            else {
+              res.json([{'ok': numReplaced}]);
+            }
+          });
+      }
+
     }
   });
   /*db.config.insert(req.body, function (err, newDoc) {   // Callback is optional

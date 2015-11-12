@@ -2,14 +2,33 @@
 
 
 angular.module('counterApp')
-  .controller('AdminCtrl', function ($scope, $http, FileUploader) {
+  .controller('AdminCtrl', function ($scope, $http, Upload, $timeout) {
     $scope.participantes = [];
-    var uploader = $scope.uploader = new FileUploader({
-      url: 'upload.php'
-    });
 
-    $scope.processForm = function() {
-      $http.post('/api/participantes', $scope.participante);
+    /*$scope.upload = function (dataUrl) {
+
+    }*/
+
+    $scope.processForm = function(dataUrl) {
+      Upload.upload({
+        url: 'http://localhost:9000/uploads',
+        data: {
+          file: Upload.dataUrltoBlob(dataUrl)
+        },
+      }).then(function (response) {
+        $timeout(function () {
+          $scope.result = response.data;
+          $scope.participante.photo= response.data[0].path;
+          $http.post('/api/participantes', $scope.participante);
+        });
+      }, function (response) {
+
+        if (response.status > 0) $scope.errorMsg = response.status
+          + ': ' + response.data;
+      }, function (evt) {
+        $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
+      });
+
       initParticipante();
     };
 

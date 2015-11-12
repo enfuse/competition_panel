@@ -1,0 +1,131 @@
+/*CUSTOM STYLE*/
+
+/*FONTS*/
+@font-face {
+    font-family: VelitesLight;
+    src:url(../fonts/Velites/RBNo3.1-Light.otf);
+}
+
+@font-face {
+    font-family: VelitesBold;
+    src:url(../fonts/Velites/RBNo3.1-Bold.otf);
+}
+
+@font-face {
+    font-family: VelitesBoldItalic;
+    src:url(../fonts/Velites/RBNo3.1-BoldItalic.otf);
+}
+
+@font-face {
+    font-family: VelitesDigital;
+    src:url(../fonts/Digital/digital-7.ttf);
+}
+
+.font-vs-light {
+    font-family: VelitesLight;
+}
+
+.font-vs-bold {
+    font-family: VelitesBold;
+}
+
+.font-vs-bold-italic {
+    font-family: VelitesBoldItalic;
+}
+
+.font-vs-digital {
+    font-family: VelitesDigital;
+}
+
+/*END FONTS*/
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: VelitesBold;
+}
+
+.vs-logo-container {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+}
+
+.vs-footer-container {
+    position: absolute;
+    margin-right: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.vs-image-container {
+    padding: 0;
+}
+.vs-image-container img {
+    width: 100%;
+}
+
+.vs-reloj-container {
+    margin: 0 auto;
+    width: 60%;
+    height: 130px;
+    background-color: black;
+
+    font-family: VelitesDigital;
+    font-size: 7.5em;
+    color: #db0000;
+
+}
+
+.vs-titular-container {
+    padding: 0;
+}
+
+.vs-titular-izq, .vs-titular-der {
+    height: 100px;
+    padding: 20px;
+    font-size: 3em;
+    color: white;
+    background-color: #801414;
+    position: relative;
+    bottom: -40px;
+}
+
+.vs-triangulo-der:after {
+    content: "";
+    position: absolute;
+    top: 40px;
+    left: -100px;
+    width: 0px;
+    height: 0px;
+    border-bottom: 100px solid #801414;
+    border-left: 100px solid rgba(255,255,255,0); /*Set to background color, not transparent!*/
+}
+
+.vs-triangulo-izq:before {
+    content: "";
+    position: absolute;
+    top: 0%;
+    right: -100px;
+    width: 0px;
+    height: 0px;
+    border-bottom: 100px solid #801414;
+    border-right: 100px solid rgba(255,255,255,0); /*Set to background color, not transparent!*/
+}
+
+.vs-puntuacion-container {
+    color: white;
+    padding: 20px;
+    height: 250px;
+    background-color: #db0000;
+}
+
+.vs-puntuacion {
+    font-size: 12em;
+}

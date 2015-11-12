@@ -5,60 +5,92 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-xs-6">
-                    <form name="userForm" ng-submit="processForm()">
+                    <form name="userForm" ng-submit="processForm(croppedDataUrl)" method="POST"
+                          enctype="multipart/form-data">
                         <md-content md-theme="docs-dark" layout-padding layout-sm="column">
-
-                                <md-input-container class="md-block">
-                                    <label>Nombre</label>
-                                    <input name="name" required ng-model="participante.name">
-
-                                    <div ng-messages="userForm.name.$error">
-                                        <div ng-message="required">Campo obligatorio.</div>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="participante-image-placeholder" ngf-select
+                                             ng-model="participante.photo" accept="image/*">
+                                            <img class="participante-preview" ng-src="{{croppedDataUrl}}"/>
+                                        </div>
                                     </div>
-                                </md-input-container>
+                                    <div class="col-xs-6">
+                                        <md-input-container class="md-block">
+                                            <label>Nombre</label>
+                                            <input name="name" required ng-model="participante.name">
 
-                                <md-input-container>
-                                    <label>Apellidos</label>
-                                    <input name="lastname" required ng-model="participante.lastname">
+                                            <div ng-messages="userForm.name.$error">
+                                                <div ng-message="required">Campo obligatorio.</div>
+                                            </div>
+                                        </md-input-container>
 
-                                    <div ng-messages="userForm.lastname.$error">
-                                        <div ng-message="required">Campo obligatorio.</div>
+                                        <md-input-container>
+                                            <label>Apellidos</label>
+                                            <input name="lastname" required ng-model="participante.lastname">
+
+                                            <div ng-messages="userForm.lastname.$error">
+                                                <div ng-message="required">Campo obligatorio.</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-button class="md-primary md-raised md-hue-2">Añadir</md-button>
                                     </div>
-                                </md-input-container>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <md-input-container>
+                                            <div>Recortar y subir imagen</div>
 
-                                <md-input-container>
-                                    <label>Foto</label>
-                                    <input name="photo" ng-model="participante.photo" type="file">
+                                            <div ngf-drop ng-model="participante.photo" ngf-pattern="image/*"
+                                                 class="cropArea">
+                                                <img-crop image="participante.photo  | ngfDataUrl"
+                                                          result-image-size="800"
+                                                          area-type="square"
+                                                          result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+                                                </img-crop>
+                                            </div>
 
-                                    <div ng-messages="userForm.photo.$error">
-                                        <div ng-message="required">Campo obligatorio.</div>
+                                            <div class="progress" ng-show="progress >= 0">
+                                                <div class="progress-bar progress-bar-danger progress-bar-striped active"
+                                                     ng-bind="progress + '%'" role="progressbar"
+                                                     aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100"
+                                                     style="width: {{progress}}%">
+                                                    <span class="sr-only">{{progress}}% Completado</span>
+                                                </div>
+                                            </div>
+
+                                            <span ng-show="result">Upload Successful</span>
+                                            <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                                        </md-input-container>
                                     </div>
-                                </md-input-container>
+                                </div>
+                            </div>
 
-
-                                <md-button class="md-primary md-raised md-hue-2">Añadir</md-button>
 
                         </md-content>
                     </form>
                 </div>
 
-            <div class="col-xs-6">
-                <div layout="column" class="md-inline-form">
-                    <md-list>
-                        <md-subheader class="md-no-sticky">Participantes</md-subheader>
-                        <md-list-item ng-repeat="participante in participantes">
-                            <md-checkbox ng-model="participante.mostrar"
-                                         ng-change="mostrarParticipante(participante._id, participante.mostrar)"></md-checkbox>
-                            <p> {{ participante.name }} {{ participante.lastname }} </p>
-                            <ng-md-icon class="md-secondary" ng-click="removeParticipante(participante._id)"
-                                        aria-label="Remove" ng-mouseenter='fill="red"' ng-mouseleave='fill="#FFC4AA"'
-                                        size=24 icon="clear" style="fill: {{fill}}"
-                                        ng-init='fill="#FFC4AA"'></ng-md-icon>
-                            <!--md-checkbox class="md-secondary" ng-model="participante.wanted"></md-checkbox-->
-                        </md-list-item>
-                    </md-list>
+                <div class="col-xs-6">
+                    <div layout="column" class="md-inline-form">
+                        <md-list>
+                            <md-subheader class="md-no-sticky">Participantes</md-subheader>
+                            <md-list-item ng-repeat="participante in participantes | orderBy:'lastname'">
+                                <md-checkbox ng-model="participante.mostrar"
+                                             ng-change="mostrarParticipante(participante._id, participante.mostrar)"></md-checkbox>
+                                <p>{{ participante.lastname }}, {{ participante.name }} </p>
+                                <ng-md-icon class="md-secondary" ng-click="removeParticipante(participante._id)"
+                                            aria-label="Remove" ng-mouseenter='fill="red"'
+                                            ng-mouseleave='fill="#FFC4AA"'
+                                            size=24 icon="clear" style="fill: {{fill}}"
+                                            ng-init='fill="#FFC4AA"'></ng-md-icon>
+                                <!--md-checkbox class="md-secondary" ng-model="participante.wanted"></md-checkbox-->
+                            </md-list-item>
+                        </md-list>
+                    </div>
                 </div>
             </div>
-        </div> </div>
+        </div>
     </div>
 </div>

@@ -1,10 +1,55 @@
-<div>
-    <timer duration='{{duration}}' autostart='false'></timer>
-    <div class="row">
-        <div class="col-sm-6" ng-repeat="participante in activeParticipantes track by participante._id">
-            {{participante.name}} {{participante.lastname}}
+<div class="container-fluid">
 
-            <img class="img-responsive" src="http://lorempixel.com/1200/1080/cats/?id={{participante._id}}">
+    <div class="row vs-logo-container">
+        <div class="col-xs-12 text-center">
+            <img src="assets/images/logo.png">
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-xs-6 text-center vs-image-container" ng-repeat="participante in activeParticipantes track by participante._id">
+            <img src="http://placehold.it/800x800">
+        </div>
+    </div>
+
+    <div class="row vs-footer-container">
+
+        <div>
+            <div class="col-xs-4 text-center vs-titular-container">
+                <div class="vs-titular-izq">
+                    <span>{{activeParticipantes[0].name}} {{activeParticipantes[0].lastname}}</span>
+                    <div class="vs-triangulo-izq"></div>
+                </div>
+            </div>
+
+            <div class="col-xs-4 text-center">
+                <div class="vs-reloj-container">
+                    <span>10:00</span>
+                </div>
+            </div>
+
+            <div class="col-xs-4 text-center vs-titular-container">
+                <div class="vs-titular-der">
+                    <span>{{activeParticipantes[1].name}} {{activeParticipantes[1].lastname}}</span>
+                </div>
+                <div class="vs-triangulo-der"></div>
+            </div>
+        </div>
+
+        <div>
+            <div class="col-xs-6 text-center vs-puntuacion-container">
+                <span class="vs-puntuacion">{{activeParticipantes[0].points}}</span>
+            </div>
+            <div class="col-xs-6 text-center vs-puntuacion-container">
+                <span class="vs-puntuacion">{{activeParticipantes[1].points}}</span>
+            </div>
+        </div>
+
+    </div>
+
 </div>
+<script type="text/javascript">
+    window.onbeforeunload = function() {
+        return "Dude, are you sure you want to leave? Think of the kittens!";
+    }
+</script>
