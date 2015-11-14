@@ -1,6 +1,7 @@
 #include <SPI.h>
 #include "nRF24L01.h"
 #include "RF24.h"
+#include "Keyboard.h"
 
 // Hardware configuration
 //Set up nRF24L01 radio on SPI bus plus pins 9 & 10 
@@ -11,10 +12,10 @@ RF24 radio(8,9);
 // Topology
 // Radio pipe addresses for the 2 nodes to communicate.
 const uint64_t pipes[2] = { 0xF0F0F0F0E1LL, 0xF0F0F0F0D2LL };
-
+  unsigned long mando1 = 0;
 void setup(void)
 {
-
+  Keyboard.begin();
  pinMode(10, OUTPUT); 
   Serial.begin(9600);
 
@@ -45,11 +46,10 @@ void loop(void)
       {
         // Fetch the payload, and see if this was the last one.
         done = radio.read( &got_time, sizeof(unsigned long) );
-        Serial.print("Dato Recibido =");
-        Serial.println(got_time);
- // Delay just a little bit to let the other unit
- // make the transition to receiver
- delay(20);
+        
+         // Delay just a little bit to let the other unit
+         // make the transition to receiver
+         delay(20);
       }
 
       // First, stop listening so we can talk
@@ -57,7 +57,12 @@ void loop(void)
 
       // Send the final one back.
       radio.write( &got_time, sizeof(unsigned long) );
-      Serial.println("Enviando Respuesta");
+
+      if(got_time> mando1){
+        Keyboard.press(KEY_RIGHT_ARROW);
+        delay(5);
+        Keyboard.release(KEY_RIGHT_ARROW);
+      }
 
       // Now, resume listening so we catch the next packets.
       radio.startListening();

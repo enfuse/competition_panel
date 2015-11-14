@@ -8,6 +8,7 @@ angular.module('counterApp')
     $http.get('/api/configs').success(function(config) {
       $scope.config = config;
       $scope.countdown = config.timer;
+      $('.vs-reloj-container').countdown({until: '+'+$scope.config.timer,  format: 'M:S', compact: true, }).countdown('toggle');
     });
 
    /* $scope.updateScopeFromPersistence = function() {
@@ -37,13 +38,24 @@ angular.module('counterApp')
 
     var handler = function(e){
       switch(e.keyCode){
-        case 37:
-          $scope.activeParticipantes[0].points=$scope.activeParticipantes[0].points+5;
+        case 37: //Right
+          $scope.activeParticipantes[0].points=$scope.activeParticipantes[0].points+parseInt($scope.config.steps);
           break;
-        case 39:
-          $scope.activeParticipantes[1].points=$scope.activeParticipantes[1].points+5;;
+        case 39: //Left
+          $scope.activeParticipantes[1].points=$scope.activeParticipantes[1].points+parseInt($scope.config.steps);
           break;
+        case 82: //R
+          $('.vs-reloj-container').countdown('toggle');
+          break;
+        case 38: //Right
+          $scope.activeParticipantes[0].points=$scope.activeParticipantes[0].points-parseInt($scope.config.steps);
+          break;
+        case 40: //Left
+          $scope.activeParticipantes[1].points=$scope.activeParticipantes[1].points-parseInt($scope.config.steps);
+          break;
+
       }
+      console.log(e.keyCode);
       $scope.$apply();
     };
 

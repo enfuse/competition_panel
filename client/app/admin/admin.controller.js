@@ -11,15 +11,18 @@ angular.module('counterApp')
 
     $scope.processForm = function(dataUrl) {
       Upload.upload({
-        url: 'http://localhost:9000/uploads',
+        url: '/upload',
         data: {
           file: Upload.dataUrltoBlob(dataUrl)
         },
       }).then(function (response) {
         $timeout(function () {
           $scope.result = response.data;
-          $scope.participante.photo= response.data[0].path;
+          $scope.participante.photo= response.data.filename;
           $http.post('/api/participantes', $scope.participante);
+          $scope.result = '';
+
+          initParticipante();
         });
       }, function (response) {
 
@@ -29,7 +32,6 @@ angular.module('counterApp')
         $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
       });
 
-      initParticipante();
     };
 
     $scope.removeParticipante = function(id){

@@ -17,7 +17,7 @@ var mime = require('mime');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads')
+    cb(null, './client/uploads')
   },
   filename: function (req, file, cb) {
 
@@ -33,8 +33,8 @@ var server = require('http').createServer(app);
 require('./config/express')(app);
 require('./routes')(app);
 
-app.post('/uploads', upload.any(), function (req, res, next) {
-    res.json(req.files);
+app.post('/upload', upload.single('file'), function (req, res, next) {
+    res.json(req.file);
 })
 
 

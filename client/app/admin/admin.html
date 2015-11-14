@@ -34,23 +34,13 @@
                                                 <div ng-message="required">Campo obligatorio.</div>
                                             </div>
                                         </md-input-container>
-                                        <md-button class="md-primary md-raised md-hue-2">Añadir</md-button>
+                                        <md-button class="md-primary md-raised md-hue-2 btn-aniadir">Añadir</md-button>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <md-input-container>
                                             <div>Recortar y subir imagen</div>
-
-                                            <div ngf-drop ng-model="participante.photo" ngf-pattern="image/*"
-                                                 class="cropArea">
-                                                <img-crop image="participante.photo  | ngfDataUrl"
-                                                          result-image-size="800"
-                                                          area-type="square"
-                                                          result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
-                                                </img-crop>
-                                            </div>
-
                                             <div class="progress" ng-show="progress >= 0">
                                                 <div class="progress-bar progress-bar-danger progress-bar-striped active"
                                                      ng-bind="progress + '%'" role="progressbar"
@@ -60,8 +50,18 @@
                                                 </div>
                                             </div>
 
-                                            <span ng-show="result">Upload Successful</span>
+                                            <span ng-show="result">Imagen subida</span>
                                             <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                                            <div ngf-drop ng-model="participante.photo" ngf-pattern="image/*"
+                                                 class="cropArea">
+                                                <img-crop image="participante.photo  | ngfDataUrl"
+                                                          result-image-size="800"
+                                                          area-type="square"
+                                                          result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+                                                </img-crop>
+                                            </div>
+
+
                                         </md-input-container>
                                     </div>
                                 </div>
@@ -77,8 +77,9 @@
                         <md-list>
                             <md-subheader class="md-no-sticky">Participantes</md-subheader>
                             <md-list-item ng-repeat="participante in participantes | orderBy:'lastname'">
-                                <md-checkbox ng-model="participante.mostrar"
+                                <md-checkbox class="mostrar-participante-check" title="Mostrar en panel" ng-model="participante.mostrar"
                                              ng-change="mostrarParticipante(participante._id, participante.mostrar)"></md-checkbox>
+                                <img src="/uploads/{{ participante.photo }}" style="width:40px; height:40px;" class="img-circle miniatura-participante">
                                 <p>{{ participante.lastname }}, {{ participante.name }} </p>
                                 <ng-md-icon class="md-secondary" ng-click="removeParticipante(participante._id)"
                                             aria-label="Remove" ng-mouseenter='fill="red"'

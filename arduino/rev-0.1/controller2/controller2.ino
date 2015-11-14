@@ -15,7 +15,7 @@ short int data[3];
 bool pressed = false;
 unsigned long contador_sync = 0;
 unsigned long contador = 0;
-unsigned long deviceid = 0;
+unsigned long deviceid = 20000;
 //Logn press
 int current; //Current state of the button (LOW is pressed b/c i'm using the pullup resistors
 int count;   // How long the button was held (secs)
@@ -37,7 +37,7 @@ void setup(void)
   radio.setPALevel(RF24_PA_HIGH);
   
   // Open pipes to other nodes for communication
-  radio.openWritingPipe(pipes[3]);
+  radio.openWritingPipe(pipes[0]);
   radio.openReadingPipe(1, pipes[1]);
 
   //Pulsador principal
@@ -54,6 +54,7 @@ void loop(void)
     contador = contador - 1;
     firstTime = millis();
   }
+  
   previous = current;
   
   if(contador != contador_sync){

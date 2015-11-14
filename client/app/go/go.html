@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid panel-container">
 
     <div class="row vs-logo-container">
         <div class="col-xs-12 text-center">
@@ -8,7 +8,7 @@
 
     <div class="row">
         <div class="col-xs-6 text-center vs-image-container" ng-repeat="participante in activeParticipantes track by participante._id">
-            <img src="http://placehold.it/800x800">
+            <img src="/uploads/{{participante.photo}}">
         </div>
     </div>
 
@@ -49,7 +49,9 @@
 
 </div>
 <script type="text/javascript">
-    window.onbeforeunload = function() {
+    /*window.onbeforeunload = function() {
         return "Dude, are you sure you want to leave? Think of the kittens!";
-    }
+    }*/
+
+
 </script>

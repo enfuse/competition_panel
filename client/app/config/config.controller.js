@@ -6,12 +6,6 @@ angular.module('counterApp')
     $scope.config.steps = 5;
     $scope.config.timer = 600;
 
-    $scope.$watch('config.steps', function() {
-      $http.post('/api/configs', $scope.config);
-    });
-    $scope.$watch('config.timer', function() {
-      $http.post('/api/configs', $scope.config);
-    });
 
     $scope.processForm = function() {
       $http.post('/api/configs', $scope.config);
@@ -20,23 +14,22 @@ angular.module('counterApp')
 
 
     var initConfig = function(){
-      $scope.config= {
-        timer: '', //Tiempo del cronómetro
-        steps: '', //Puntos por pulsación del pulsador
-        active: false
-      };
       getConfig();
     }
+
 
     var getConfig = function(){
       $http.get('/api/configs').success(function(config) {
         $scope.config= config;
       });
     }
-
     initConfig();
-
-
+    $scope.$watch('config.steps', function() {
+      $http.post('/api/configs', $scope.config);
+    });
+    $scope.$watch('config.timer', function() {
+      $http.post('/api/configs', $scope.config);
+    });
   })
   .config(function($mdThemingProvider) {
     // Configure a dark theme with primary foreground yellow

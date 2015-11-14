@@ -26,8 +26,20 @@ exports.index = function(req, res) {
 
 exports.create = function (req, res) {
   //@todo add create time
-  //console.log(req.body);
-  db.config.findOne({_id:req.body._id}, function (err, docs) {
+
+  if(typeof req.body._id != 'undefined'){
+    db.config.update({_id: req.body._id},
+      {$set: {timer: req.body.timer, steps: req.body.steps}}, function (err, numReplaced) {   // Callback is optional
+        if (err) {
+          res.json([{'error': 'An error has occurred'}]);
+        }
+        else {
+          res.json([{'ok': numReplaced}]);
+        }
+      });
+  }
+
+  /*db.config.findOne({_id:req.body._id}, function (err, docs) {
     if (err) {
       res.json([{'error': 'An error has occurred'}]);
     }
@@ -42,7 +54,7 @@ exports.create = function (req, res) {
           }
         });
       }else{
-        db.config.update({_id: req.body._id},
+        db.config.update({_id: docs._id},
           {$set: {timer: req.body.timer, steps: req.body.steps}}, function (err, numReplaced) {   // Callback is optional
             if (err) {
               res.json([{'error': 'An error has occurred'}]);
